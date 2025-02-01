@@ -1,0 +1,19 @@
+[package]
+name = "userapp"
+version = "0.1.0"
+edition = "2021"
+
+
+[dependencies]
+actix-web = "4"
+actix-rt = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+diesel = { version = "2", features = ["sqlite", "r2d2"] }
+diesel-async = { version = "0.3", features = ["bb8", "sqlite"] }
+jsonwebtoken = "9"
+bcrypt = "0.15"
+chrono = { version = "0.4", features = ["serde"] }
+dotenv = "0.15"
+tokio = { version = "1", features = ["full"] }
+async-trait = "0.1"
