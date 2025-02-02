@@ -1,4 +1,5 @@
-use actix_web::{web, App, HttpServer, HttpResponse, Responder};
+use actix_web::{web, App, HttpServer, HttpResponse, Responder, http};
+use actix_cors::Cors;
 use rusqlite::{params, Connection, Result};
 use serde::{Deserialize, Serialize};
 #[allow(unused_imports)]
@@ -98,10 +99,17 @@ async fn list_logged_in_users() -> impl Responder {
     HttpResponse::Ok().json(users)
 }
 
-#[actix_web::main]
+#[actix_rt::main]
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
+        let cors = Cors::default()
+            .allow_any_origin() // ⚠️ Erlaubt alle Ursprünge – für Entwicklung ok, später besser gezielt erlauben
+            .allow_any_method()  // Erlaubt alle HTTP-Methoden
+            .allow_any_header()  // Erlaubt alle Header
+        .max_age(3600)       // Cache die Preflight-Antwort für 1 Stunde
+        .supports_credentials();
         App::new()
+            .wrap(cors)
             .wrap(Logger::default())
             .route("/register", web::post().to(register_user))
             .route("/users", web::get().to(list_users))
