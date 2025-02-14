@@ -1,4 +1,5 @@
-### Simple Rust UserAdministration with Actix and Sqlite
+### simple Rust userAdministration with actix and sqlite
+### React in the frontend
 
 #### start .\betterv.exe 
 #### or cd .\betterv 
